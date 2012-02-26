@@ -2,6 +2,14 @@ import gtk
 import webkit
 import gobject
 import javascriptcore as jscore
+import tidy
+
+options = dict(output_xhtml=1, 
+               add_xml_decl=1,
+               numeric_entities=1,
+               indent=1, 
+               tidy_mark=0)
+
 
 import sys
 import os
@@ -11,7 +19,9 @@ def load_finished_cb(view, frame):
     jsw = ctx.globalObject.window
     doc = jsw.document
     serializer = ctx.evaluateScript('new XMLSerializer()')
-    print serializer.serializeToString(doc)
+    html_str = serializer.serializeToString(doc)
+    xml_str = tidy.parseString(html_str, **options)
+    print xml_str
     gtk.main_quit()
 
 
