@@ -1,0 +1,5 @@
+This script can crunch through very dirty HTML documents. First, it passes document to Webkit layout engine and then to HTML Tidy.
+
+Usage:
+
+python html2xml.py < document.html > document.xml
